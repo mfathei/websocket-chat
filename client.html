@@ -5,15 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Chat</title>
+
+    <style>
+        div#log {
+            width: 800px;
+            height: 300px;
+            margin: 0 auto;
+            border: 5px solid;
+            border-radius: 10px;
+        }
+
+        div#sendCtrls {
+            width: 235px;
+            margin: 30px auto;
+        }
+    </style>
 </head>
 
 <body>
 
     <h2>WebSocket Chat</h2>
     <div id="log"></div>
-    <input type="text" id="text" placeholder="Your message here">
-    <button>Send</button>
+
+    <div id="sendCtrls">
+        <input type="text" id="text" placeholder="Your message here">
+        <button>Send</button>
+    </div>
 
     <script language="javascript" type="text/javascript">
 
@@ -29,6 +47,7 @@
         document.querySelector('button').onclick = function () {
             var text = document.getElementById("text").value;
             sock.send(text);
+            log.innerHTML += "You: " + text + "<br/>";
         }
 
     </script>
