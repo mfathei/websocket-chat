@@ -6,9 +6,19 @@ s.on("connection", function (ws) {
     ws.on("message", function (message) {
         console.log("Received: " + message);
 
+        message = JSON.parse(message);
+
+        if (message.type === "name") {
+            ws.personName = message.data;
+            return;
+        }
+
         s.clients.forEach(function (client) {
-            if(client === ws) return;
-            client.send(message);
+            if (client === ws) return;
+            client.send(JSON.stringify({
+                name: ws.personName,
+                data: message.data
+            }));
         });
 
         // ws.send("From server: " + message);

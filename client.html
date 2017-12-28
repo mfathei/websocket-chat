@@ -35,18 +35,34 @@
 
     <script language="javascript" type="text/javascript">
 
+
+        var name = prompt('What is your name?');
         var log = document.getElementById("log");
         var wsUrl = "ws://localhost:5001/";
         var sock = new WebSocket(wsUrl);
 
+        sock.onopen = function (evt) {
+            var message = JSON.stringify({
+                type: "name",
+                data: name
+            });
+
+            sock.send(message);
+        }
+
         sock.onmessage = function (evt) {
-            console.log(evt.data);
-            log.innerHTML += evt.data + "<br/>";
+            msg = JSON.parse(evt.data);
+            log.innerHTML += msg.name + " : " + msg.data + "<br/>";
         }
 
         document.querySelector('button').onclick = function () {
             var text = document.getElementById("text").value;
-            sock.send(text);
+            // sock.send(text);
+            var msg = JSON.stringify({
+                type: "message",
+                data: text
+            });
+            sock.send(msg);
             log.innerHTML += "You: " + text + "<br/>";
         }
 
