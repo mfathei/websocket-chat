@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h2>WebSocket Chat</h2>
+    <div id="log"></div>
+    <input type="text" id="text" placeholder="Your message here">
+    <button>Send</button>
+
+    <script language="javascript" type="text/javascript">
+
+        var log = document.getElementById("log");
+        var wsUrl = "ws://localhost:5001/";
+        var sock = new WebSocket(wsUrl);
+
+        sock.onmessage = function (evt) {
+            console.log(evt.data);
+            log.innerHTML += evt.data + "<br/>";
+        }
+
+        document.querySelector('button').onclick = function () {
+            var text = document.getElementById("text").value;
+            sock.send(text);
+        }
+
+    </script>
+
+</body>
+
+</html>
